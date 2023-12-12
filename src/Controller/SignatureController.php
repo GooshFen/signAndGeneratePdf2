@@ -19,7 +19,6 @@ class SignatureController extends AbstractController
         $form = $this->createForm(SignatureType::class, $signature);
         $form->handleRequest($request);
         dump($form->get('signatureDataUrl')->getData());
-        dd($form->isSubmitted());
         
 
         if ($form->isSubmitted() && $form->isValid()) {

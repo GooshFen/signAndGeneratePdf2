@@ -17,21 +17,26 @@
 {% block title %}Contrat{% endblock %}
 
 {% block body %}
-<h1>Sign the PDF</h1>
-    <canvas id="signature-pad" width="400" height="200"></canvas>
-    {# <button onclick="saveSignature()">Save Signature</button> #}
 
-    <form action="{{ path('signature') }}" method="post" id="signature-form">
-    <input type="hidden" name="signatureForm[signatureDataUrl]" id="signatureDataUrlInput">
-    <!-- Add other form fields or styling as needed -->
-    <button type="submit">Save Signature</button>
-</form>
+<canvas id="signature-pad" width="400" height="200"></canvas>
+
+{{ form_start(formSignature) }}
+
+<div class="col" id="some-custom-id" hidden>
+    {{ form_widget(formSignature.signatureDataUrl) }}
+</div>
+
+<button class="btn" type="submit">{{ button_label|default('Save') }}</button>
+{{ form_end(formSignature) }}
+
+
 {% endblock %}
 
 {% block javascripts %}
 <script>
 
-    let form = document.getElementById('signature-form');
+    let form = document.getElementById('signature');
+    console.log(form)
     let canvas = document.getElementById('signature-pad');            
     let signaturePad = new SignaturePad(canvas);
     console.log(canvas)
@@ -40,11 +45,39 @@
         form.addEventListener('submit', function(e) { 
             e.preventDefault();
             let signatureDataUrl = signaturePad.toDataURL();
-            document.getElementById('signatureDataUrlInput').value = signatureDataUrl;
-            document.getElementById('signature-form').submit();
+            document.getElementById('signature_signatureDataUrl').value = signatureDataUrl;
+            document.getElementById('signature').submit();
         })
+    </script>
+{% endblock %}
 
-        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -72,10 +105,3 @@
                     console.error('Error:', error);
                 });
                     } #}
-
-    
-    </script>
-{% endblock %}
-
-
-
