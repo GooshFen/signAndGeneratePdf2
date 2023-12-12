@@ -162,21 +162,21 @@ class ContratController extends AbstractController
 
         return $imagePath;
     }
+    
 
-
-    #[Route('/{id}/save-signature', name: 'save_signature', methods: ['POST'])]
+    #[Route('/save_signature', name: 'save_signature', methods: ['POST'])]
     public function saveSignature(Request $request, EntityManagerInterface $entityManager): Response
     {
+
         $form = $this->createForm(SignatureType::class);
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $signatureDataUrl = $form->get('signatureDataUrl')->getData();
             dd($signatureDataUrl);
             // Implement logic to process the signature data (e.g., embed it in the PDF)
-
             // ...
-
             // Return a response (e.g., a PDF with the embedded signature)
             return new Response('Signature saved successfully!');
         }

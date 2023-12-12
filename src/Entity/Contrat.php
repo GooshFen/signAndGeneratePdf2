@@ -46,6 +46,9 @@ class Contrat
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $pdfSansSignature = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $signatureDataUrl = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -179,6 +182,18 @@ class Contrat
     public function setPdfSansSignature(?string $pdfSansSignature): static
     {
         $this->pdfSansSignature = $pdfSansSignature;
+
+        return $this;
+    }
+
+    public function getSignatureDataUrl(): ?string
+    {
+        return $this->signatureDataUrl;
+    }
+
+    public function setSignatureDataUrl(?string $signatureDataUrl): static
+    {
+        $this->signatureDataUrl = $signatureDataUrl;
 
         return $this;
     }

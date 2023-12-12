@@ -21,7 +21,7 @@
     <canvas id="signature-pad" width="400" height="200"></canvas>
     {# <button onclick="saveSignature()">Save Signature</button> #}
 
-    <form action="{{ path('save_signature') }}" method="post" id="signature-form">
+    <form action="{{ path('signature') }}" method="post" id="signature-form">
     <input type="hidden" name="signatureForm[signatureDataUrl]" id="signatureDataUrlInput">
     <!-- Add other form fields or styling as needed -->
     <button type="submit">Save Signature</button>
@@ -31,16 +31,20 @@
 {% block javascripts %}
 <script>
 
-    var canvas = document.getElementById('signature-pad');            
-    var signaturePad = new SignaturePad(canvas);
+    let form = document.getElementById('signature-form');
+    let canvas = document.getElementById('signature-pad');            
+    let signaturePad = new SignaturePad(canvas);
     console.log(canvas)
 
 
-    function saveSignature() {
-        var signatureDataUrl = signaturePad.toDataURL();
-        document.getElementById('signatureDataUrlInput').value = signatureDataUrl;
-        document.getElementById('signature-form').submit();
-    }
+        form.addEventListener('submit', function(e) { 
+            e.preventDefault();
+            let signatureDataUrl = signaturePad.toDataURL();
+            document.getElementById('signatureDataUrlInput').value = signatureDataUrl;
+            document.getElementById('signature-form').submit();
+        })
+
+        
 
 
 
