@@ -8,11 +8,14 @@ use App\Form\ContratType;
 use App\Form\SignatureType;
 use App\Service\PdfSignerService;
 use App\Repository\ContratRepository;
+use App\Services\CreateTempDirService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+
 
 #[Route('/contrat')]
 class ContratController extends AbstractController
@@ -84,9 +87,12 @@ class ContratController extends AbstractController
 
 
     #[Route('/{id}/pdf', name: 'app_contrat_pdf', methods: ['POST', 'GET'])]
-    public function pdf(Request $request, Contrat $contrat, EntityManagerInterface $entityManager, ContratRepository $contratRepository): Response
+    public function pdf(Request $request, Contrat $contrat, EntityManagerInterface $entityManager, ContratRepository $contratRepository, CreateTempDirService $createTempDirService): Response
     {
         $dompdf = new Dompdf();
+
+        
+
 
         $formSignature = $this->createForm(SignatureType::class, $contrat,['attr' => [
             'id' => 'signature'
@@ -95,11 +101,18 @@ class ContratController extends AbstractController
         
         if ($formSignature->isSubmitted() && $formSignature->isValid()) {
             $signatureDataUrl = $formSignature->get('signatureDataUrl')->getData();
-            dd($signatureDataUrl);
-            $contrat->setSignatureDataUrl($signatureDataUrl);
+            
 
-            $entityManager->persist($contrat);
-            $entityManager->flush();
+            $pathToSignatureImageFile = $this->convertDataUrlToImage($signatureDataUrl) ;
+            // dd($pathToSignatureImageFile);
+            // dd($parameterBagInterface->get('kernel.project_dir'));
+            // Convertir l'encodage en base64 de la signature en image
+            // $contrat->setSignatureDataUrl($signatureDataUrl);
+            $temp = $createTempDirService->createTemporaryDirectory();
+            dd($temp);
+
+            // $entityManager->persist($contrat);
+            // $entityManager->flush();
 
             return new Response('Signature saved successfully!');
         }
@@ -166,6 +179,8 @@ class ContratController extends AbstractController
     //     ]);
     // }
 
+ 
+
     private function convertDataUrlToImage($dataUrl)
     {
         // Extract base64-encoded image data
@@ -175,33 +190,9 @@ class ContratController extends AbstractController
         $imageData = base64_decode($base64Image);
         $imagePath = sys_get_temp_dir() . '/signature_image.png';
         file_put_contents($imagePath, $imageData);
-
+        
         return $imagePath;
     }
-    
-
-    // #[Route('/save_signature', name: 'save_signature', methods: ['POST'])]
-    // public function saveSignature(Request $request, EntityManagerInterface $entityManager): Response
-    // {
-
-    //     $form = $this->createForm(SignatureType::class);
-    //     $form->handleRequest($request);
-
-
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $signatureDataUrl = $form->get('signatureDataUrl')->getData();
-    //         dd($signatureDataUrl);
-    //         // Implement logic to process the signature data (e.g., embed it in the PDF)
-    //         // ...
-    //         // Return a response (e.g., a PDF with the embedded signature)
-    //         return new Response('Signature saved successfully!');
-    //     }
-
-    //     return new Response('Invalid form submission.', Response::HTTP_BAD_REQUEST);
-    // }
-
-
-
 
 
 
