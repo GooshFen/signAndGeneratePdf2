@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TeletravailForm{% endblock %}
+
+{% block body %}
+    <h1>TeletravailForm</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ teletravail_form.id }}</td>
+            </tr>
+            <tr>
+                <th>NatureContrat</th>
+                <td>{{ teletravail_form.natureContrat }}</td>
+            </tr>
+            <tr>
+                <th>Quotite</th>
+                <td>{{ teletravail_form.quotite }}</td>
+            </tr>
+            <tr>
+                <th>ConnexionInternet</th>
+                <td>{{ teletravail_form.connexionInternet ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>AttestationHonneur</th>
+                <td>{{ teletravail_form.attestationHonneur }}</td>
+            </tr>
+            <tr>
+                <th>AttestationAssurance</th>
+                <td>{{ teletravail_form.attestationAssurance }}</td>
+            </tr>
+            <tr>
+                <th>ActiviteEligible</th>
+                <td>{{ teletravail_form.activiteEligible ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>PeriodeEssaiEnCours</th>
+                <td>{{ teletravail_form.periodeEssaiEnCours ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>AutonomieSuffisante</th>
+                <td>{{ teletravail_form.autonomieSuffisante ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>ConditionsEligibilites</th>
+                <td>{{ teletravail_form.conditionsEligibilites ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>ConditionsTechMatAdm</th>
+                <td>{{ teletravail_form.conditionsTechMatAdm ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>AvisSupHierarchique</th>
+                <td>{{ teletravail_form.avisSupHierarchique ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>CommentaireSupHierarchique</th>
+                <td>{{ teletravail_form.commentaireSupHierarchique }}</td>
+            </tr>
+            <tr>
+                <th>AvisDrh</th>
+                <td>{{ teletravail_form.avisDrh ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>CommentaireDrh</th>
+                <td>{{ teletravail_form.commentaireDrh }}</td>
+            </tr>
+            <tr>
+                <th>SignatureSupHierarchique</th>
+                <td>{{ teletravail_form.signatureSupHierarchique }}</td>
+            </tr>
+            <tr>
+                <th>SignatureDrh</th>
+                <td>{{ teletravail_form.signatureDrh }}</td>
+            </tr>
+            <tr>
+                <th>SignatureCollab</th>
+                <td>{{ teletravail_form.signatureCollab }}</td>
+            </tr>
+            <tr>
+                <th>JourneeTeletravaillees</th>
+                <td>{{ teletravail_form.journeeTeletravaillees }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_teletravail_form_index') }}">back to list</a>
+
+    <a href="{{ path('app_teletravail_form_edit', {'id': teletravail_form.id}) }}">edit</a>
+
+    {{ include('teletravail_form/_delete_form.html.twig') }}
+{% endblock %}

@@ -8,7 +8,7 @@ use App\Form\ContratType;
 use App\Form\SignatureType;
 use App\Service\PdfSignerService;
 use App\Repository\ContratRepository;
-use App\Services\CreateTempDirService;
+// use App\Services\CreateTempDirService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -87,7 +87,7 @@ class ContratController extends AbstractController
 
 
     #[Route('/{id}/pdf', name: 'app_contrat_pdf', methods: ['POST', 'GET'])]
-    public function pdf(Request $request, Contrat $contrat, EntityManagerInterface $entityManager, ContratRepository $contratRepository, CreateTempDirService $createTempDirService): Response
+    public function pdf(Request $request, Contrat $contrat, EntityManagerInterface $entityManager, ContratRepository $contratRepository): Response
     {
         $dompdf = new Dompdf();
 
@@ -108,8 +108,8 @@ class ContratController extends AbstractController
             // dd($parameterBagInterface->get('kernel.project_dir'));
             // Convertir l'encodage en base64 de la signature en image
             // $contrat->setSignatureDataUrl($signatureDataUrl);
-            $temp = $createTempDirService->createTemporaryDirectory();
-            dd($temp);
+            // $temp = $createTempDirService->createTemporaryDirectory();
+            // dd($temp);
 
             // $entityManager->persist($contrat);
             // $entityManager->flush();

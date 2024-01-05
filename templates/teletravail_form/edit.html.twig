@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit TeletravailForm{% endblock %}
+
+{% block body %}
+    <h1>Edit TeletravailForm</h1>
+
+    {{ include('teletravail_form/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_teletravail_form_index') }}">back to list</a>
+
+    {{ include('teletravail_form/_delete_form.html.twig') }}
+{% endblock %}

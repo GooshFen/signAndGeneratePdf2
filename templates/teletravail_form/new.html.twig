@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New TeletravailForm{% endblock %}
+
+{% block body %}
+    <h1>Create new TeletravailForm</h1>
+
+    {{ include('teletravail_form/_form.html.twig') }}
+
+    <a href="{{ path('app_teletravail_form_index') }}">back to list</a>
+{% endblock %}
