@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\TeletravailForm;
+use App\EventSubscriber\FormSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,7 +14,7 @@ class TeletravailFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('natureContrat', ChoiceType::class, [
+        ->add('natureContrat', ChoiceType::class, [
             'choices'  => [
                 'CDI' => 'CDI',
                 'CDD supérieur à 6 mois consécutif' => 'CDD supérieur à 6 mois consécutif',
@@ -24,29 +25,16 @@ class TeletravailFormType extends AbstractType
                 'Temps complet' => 'Temps complet',
                 'Temps partiel' => 'Temps partiel',
             ],])
-            ->add('connexionInternet')
-            // ->add('attestationHonneur')
-            // ->add('attestationAssurance')
-            ->add('activiteEligible')
-            ->add('periodeEssaiEnCours')
-            ->add('autonomieSuffisante')
-            ->add('conditionsEligibilites')
-            ->add('conditionsTechMatAdm')
-            // ->add('avisSupHierarchique')
-            ->add('commentaireSupHierarchique')
-            // ->add('avisDrh')
-            // ->add('commentaireDrh')
-            // ->add('signatureSupHierarchique')
-            // ->add('signatureDrh')
-            ->add('signatureCollab')
-            ->add('journeeTeletravaillees')
+            // Ajouter un souscripteur d'évènement pour afficher les champs en fonction des rôles
+            ->addEventSubscriber(new FormSubscriber()) 
         ;
     }
-
+    // permet de configurer les options passées au formulaire
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => TeletravailForm::class,
+            'user_roles' => [],
         ]);
     }
 }
