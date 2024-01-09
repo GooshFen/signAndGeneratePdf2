@@ -18,6 +18,7 @@ class TeletravailFormType extends AbstractType
                 'CDI' => 'CDI',
                 'CDD supérieur à 6 mois consécutif' => 'CDD supérieur à 6 mois consécutif',
             ],])
+            // Ajouter un champs pour la quotité si ni temps partiel ou temps complet
             ->add('quotite', ChoiceType::class, [
             'choices'  => [
                 'Temps complet' => 'Temps complet',
