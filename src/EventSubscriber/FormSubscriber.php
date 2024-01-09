@@ -29,10 +29,8 @@ class FormSubscriber implements EventSubscriberInterface
         }
 
         if(in_array('ROLE_ADMIN', $userRoles) === true) {
-            $form->add('avisManager') ;
-            $form->add('commentaireManager') ;
+            $form->add('avisDrh') ;
+            $form->add('commentaireDrh') ;
         }
-
-
     }
 }

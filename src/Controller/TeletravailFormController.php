@@ -29,16 +29,19 @@ class TeletravailFormController extends AbstractController
         // Générer ici le lien et le mail vers le formulaire à éditer vers le manager du collaborateur ayant compléter le formulaire.
         $teletravailForm = new TeletravailForm();
         // Créer le formulaire et passe les rôles aux formulaires
+        $user = $this->getUser();
         $form = $this->createForm(TeletravailFormType::class, $teletravailForm, [
             'user_roles'  => $user->getRoles(),
         ]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $entityManager->persist($teletravailForm);
             $entityManager->flush();
-
             return $this->redirectToRoute('app_teletravail_form_index', [], Response::HTTP_SEE_OTHER);
+            
         }
 
         return $this->render('teletravail_form/new.html.twig', [
@@ -56,14 +59,16 @@ class TeletravailFormController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_teletravail_form_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, TeletravailForm $teletravailForm, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, TeletravailForm $teletravailForm, EntityManagerInterface $entityManager, User $user): Response
     {
 
-        // Gérer la sécurisation des contenus dans le twig.
         // Gérer l'envoie des mails au niveau de cette route au manager correspondant
+        $user = $this->getUser();
+        // dd($user->getRoles());
+        $form = $this->createForm(TeletravailFormType::class, $teletravailForm, [
+            'user_roles'  => $user->getRoles(),
+        ]);
 
-
-        $form = $this->createForm(TeletravailFormType::class, $teletravailForm);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

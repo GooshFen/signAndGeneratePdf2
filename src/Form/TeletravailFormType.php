@@ -25,7 +25,7 @@ class TeletravailFormType extends AbstractType
                 'Temps complet' => 'Temps complet',
                 'Temps partiel' => 'Temps partiel',
             ],])
-            // Ajouter un souscripteur d'évènement pour afficher les champs en fonction des rôles
+            // Ajoute un souscripteur d'évènement sur le formualire pour afficher les champs en fonction des rôles
             ->addEventSubscriber(new FormSubscriber()) 
         ;
     }
